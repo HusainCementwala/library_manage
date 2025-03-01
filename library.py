@@ -135,21 +135,57 @@ class LibraryManagementSystem:
 #================================================DATA FRAME RIGHT========================================
 
     DataFrameRight = LabelFrame(frame,text="Book Details",bg="powder blue",fg="black",padx=20, bd=12,relief=RIDGE, font=("helvetica",12,"bold"))
-    DataFrameRight.place(x=900,y=5,width=580,height=350)
+    DataFrameRight.place(x=870,y=5,width=580,height=350)
 
 
-    self.txtBox = Text(DataFrameRight,font=("helvetica",12,"bold"),width=32,height=16,padx=2,pady=6)
+    self.txtBox = Text(DataFrameRight,font=("helvetica",12,"bold"),width=32,height=15,padx=2,pady=6)
     self.txtBox.grid(row=0,column=2)
+
+
+    listScrollBar = Scrollbar(DataFrameRight)
+    listScrollBar.grid(row=0,column=1,sticky="ns")
 
     listBooks = ['Python Crash Course','Automate the Boring Stuff with Python','Learning Python','Fluent Python','Effective Python','Python Cookbook','Think Python','Python Tricks','Serious Python','Introduction to Machine Learning with Python','Clean Code','The Pragmatic Programmer','Design Patterns: Elements of Reusable Object-Oriented Software','Code Complete','You Dont Know JS','Eloquent JavaScript','Grokking Algorithms','Structure and Interpretation of Computer Programs','The Art of Computer Programming','Refactoring: Improving the Design of Existing Code']
 
-    listBox = Listbox(DataFrameRight,font=("helvetica",12,"bold"),width=16,height=16)
+    listBox = Listbox(DataFrameRight,font=("helvetica",12,"bold"),width=20,height=15)
     listBox.grid(row=0,column=0,padx=4)
+    listScrollBar.config(command=listBox.yview)
+
+    for item in listBooks:
+      listBox.insert(END,item)
 
     #============================== BUTTON FRAMES =============================
 
     FrameButton = Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
     FrameButton.place(x=0,y=530,width=1530,height=70)
+
+
+    # Define the number of buttons
+    num_buttons = 6  
+
+# Configure grid columns for equal spacing
+    for i in range(num_buttons):
+     FrameButton.grid_columnconfigure(i, weight=1)
+
+
+
+    btnAddData = Button(FrameButton,text="Add Book",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=0,pady=5,padx=5)
+
+    btnAddData = Button(FrameButton,text="Show Books",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=1,pady=5,padx=5)
+
+    btnAddData = Button(FrameButton,text="Update Books",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=2,pady=5,padx=5)
+
+    btnAddData = Button(FrameButton,text="Delete Book",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=3,pady=5,padx=5)
+
+    btnAddData = Button(FrameButton,text="Reset",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=4,pady=5,padx=5)
+
+    btnAddData = Button(FrameButton,text="Exit",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData.grid(row=0,column=5,pady=5,padx=5)
 
 
     #============================== INFO FRAMES  =============================
