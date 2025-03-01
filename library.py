@@ -152,7 +152,7 @@ class LibraryManagementSystem:
     FrameButton.place(x=0,y=530,width=1530,height=70)
 
 
-    #============================== INFO FRAMES =============================
+    #============================== INFO FRAMES  =============================
 
     FrameDetails = Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
     FrameDetails.place(x=0,y=600,width=1530,height=195)
