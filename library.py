@@ -135,7 +135,7 @@ class LibraryManagementSystem:
 #================================================DATA FRAME RIGHT========================================
 
     DataFrameRight = LabelFrame(frame,text="Book Details",bg="powder blue",fg="black",padx=20, bd=12,relief=RIDGE, font=("helvetica",12,"bold"))
-    DataFrameRight.place(x=870,y=5,width=580,height=350)
+    DataFrameRight.place(x=900,y=5,width=580,height=350)
 
 
     self.txtBox = Text(DataFrameRight,font=("helvetica",12,"bold"),width=32,height=16,padx=2,pady=6)
@@ -146,13 +146,13 @@ class LibraryManagementSystem:
     listBox = Listbox(DataFrameRight,font=("helvetica",12,"bold"),width=16,height=16)
     listBox.grid(row=0,column=0,padx=4)
 
-    #==============================BUTTON FRAMES=============================
+    #============================== BUTTON FRAMES =============================
 
     FrameButton = Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
     FrameButton.place(x=0,y=530,width=1530,height=70)
 
 
-    #==============================INFO FRAMES=============================
+    #============================== INFO FRAMES =============================
 
     FrameDetails = Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
     FrameDetails.place(x=0,y=600,width=1530,height=195)
