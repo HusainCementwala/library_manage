@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+import mysql.connector
 
 
 class LibraryManagementSystem:
@@ -192,6 +193,52 @@ class LibraryManagementSystem:
 
     FrameDetails = Frame(self.root,bd=12,relief=RIDGE,padx=20,bg="powder blue")
     FrameDetails.place(x=0,y=600,width=1530,height=195)
+
+
+    Table_frame = Frame(FrameDetails,bd=6,relief=RIDGE,bg="powder blue")
+    Table_frame.place(x=0,y=2,width=1460,height=170)
+
+    xscroll=ttk.Scrollbar(Table_frame,orient=HORIZONTAL)
+    yscroll=ttk.Scrollbar(Table_frame,orient=VERTICAL)
+
+    self.library_table=ttk.Treeview(Table_frame,columns=("MemberType","PRNno","Title","FirstName","Lastname","Address1","Address2","PostID","Mobile","BookID","BookTitle","Author","DateBorrowed","DateDue","Days","LateReturnFine","DateOverdue","FinalPrice"),xscrollcommand=xscroll.set,yscrollcommand=yscroll.set)
+
+    xscroll.pack(side=BOTTOM,fill=X)
+    yscroll.pack(side=RIGHT,fill=Y)
+
+    xscroll.config(command=self.library_table.xview)
+    yscroll.config(command=self.library_table.yview)
+
+
+    self.library_table.heading("MemberType",text="Member Type")
+    self.library_table.heading("PRNno",text="PRN No.")
+    self.library_table.heading("Title",text="Title")
+    self.library_table.heading("FirstName",text="First Name")
+    self.library_table.heading("Lastname",text="Last Name")
+    self.library_table.heading("Address1",text="Address1")
+    self.library_table.heading("Address2",text="Address2")
+    self.library_table.heading("PostID",text="Post ID")
+    self.library_table.heading("Mobile",text="Mobile Number")
+    self.library_table.heading("BookID",text="Book ID")
+    self.library_table.heading("BookTitle",text="Book Title")
+    self.library_table.heading("Author",text="Author")
+    self.library_table.heading("DateBorrowed",text="Date of Borrowed")
+    self.library_table.heading("DateDue",text="Date Due")
+    self.library_table.heading("Days",text="DaysOnBook")
+    self.library_table.heading("LateReturnFine",text="LateReturnFine")
+    self.library_table.heading("DateOverdue",text="DateOverDue")
+    self.library_table.heading("FinalPrice",text="Final Price")
+
+
+    columns = ["MemberType","PRNno","Title","FirstName","Lastname","Address1","Address2","PostID","Mobile","BookID","BookTitle","Author",        "DateBorrowed","DateDue","Days","LateReturnFine","DateOverdue","FinalPrice"]
+    for col in columns:
+     self.library_table.column(col, width=100)
+
+
+    self.library_table["show"]="headings"
+    self.library_table.pack(fill=BOTH,expand=1)
+
+
 
 
     
