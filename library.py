@@ -1,8 +1,10 @@
+from bookdata import SelectBook
 from tkinter import *
 from tkinter import ttk
 import mysql.connector
 from tkinter import messagebox
 import datetime
+
 
 
 class LibraryManagementSystem:
@@ -167,39 +169,22 @@ class LibraryManagementSystem:
     self.txtBox.grid(row=0,column=2)
 
 
-    listScrollBar = Scrollbar(DataFrameRight)
-    listScrollBar.grid(row=0,column=1,sticky="ns")
+    self.listScrollBar = Scrollbar(DataFrameRight)
+    self.listScrollBar.grid(row=0,column=1,sticky="ns")
 
     listBooks = ['Python Crash Course','Automate the Boring Stuff with Python','Learning Python','Fluent Python','Effective Python','Python Cookbook','Think Python','Python Tricks','Serious Python','Introduction to Machine Learning with Python','Clean Code','The Pragmatic Programmer','Design Patterns: Elements of Reusable Object-Oriented Software','Code Complete','You Dont Know JS','Eloquent JavaScript','Grokking Algorithms','Structure and Interpretation of Computer Programs','The Art of Computer Programming','Refactoring: Improving the Design of Existing Code']
 
-    def SelectBook(event=""):
-      value=str(listBox.get(listBox.curselection()))
-      x=value
-      if(x=="Python Crash Course"):
-        self.bookid_var.set("BK1D5454")
-        self.booktitle_var.set("Python Crash Course")
-        self.author_var.set("Paul Bailey")
+    
+  
+    self.listBox = Listbox(DataFrameRight, font=("helvetica", 12, "bold"), width=20, height=15)
+    self.listBox.grid(row=0, column=0, padx=4)
+    self.listBox.bind("<<ListboxSelect>>", lambda event: SelectBook(self, event))
+  # Bind function after defining listBox
 
-        d1=datetime.datetime.today()
-        d2=datetime.timedelta(days=15)
-        d3=d1+d2
-        self.dateborrowed_var.set(d1)
-        self.datedue_var.set(d3)
-        self.daysonbook_var.set(15)
-        self.latereturnfine_var.set("Rs.50")
-        self.dateoverdue_var.set("NA")
-        self.finalprice_var.set("Rs.788")
-
-
-
-
-    listBox = Listbox(DataFrameRight,font=("helvetica",12,"bold"),width=20,height=15)
-    listBox.bind("<<ListboxSelect>>",SelectBook)
-    listBox.grid(row=0,column=0,padx=4)
-    listScrollBar.config(command=listBox.yview)
+    self.listScrollBar.config(command=self.listBox.yview)
 
     for item in listBooks:
-      listBox.insert(END,item)
+      self.listBox.insert(END,item)
 
     #============================== BUTTON FRAMES =============================
 
@@ -283,6 +268,8 @@ class LibraryManagementSystem:
     for col in columns:
      self.library_table.column(col, width=100)
 
+     self.fetch_data()
+
 
     self.library_table["show"]="headings"
     self.library_table.pack(fill=BOTH,expand=1)
@@ -322,18 +309,36 @@ class LibraryManagementSystem:
     )
 
     conn.commit()
+    self.fetch_data()
     conn.close()
 
     messagebox.showinfo("Success","Member has been inserted successfully")
 
 
 
+  def fetch_data(self):
+      conn = mysql.connector.connect(
+          host="localhost",
+          username="root",
+          password="Husain515253@",
+          database="mydata"
+      )
+      my_cursor = conn.cursor()
+      my_cursor.execute("SELECT * FROM library")
+      rows = my_cursor.fetchall()
+
+      if len(rows) != 0:
+          self.library_table.delete(*self.library_table.get_children())  # Clear existing data
+
+          for i in rows:  
+              self.library_table.insert("", END, values=i)  # Insert rows into the table
+
+      conn.commit()  # Always commit and close the connection
+      conn.close()
 
 
 
 
-
-    
 
 
 
@@ -341,3 +346,7 @@ if __name__ == "__main__":
   root=Tk()
   obj=LibraryManagementSystem(root)
   root.mainloop()
+
+
+
+
