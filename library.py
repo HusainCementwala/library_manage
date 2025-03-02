@@ -1,9 +1,11 @@
+import tkinter.messagebox
 from bookdata import SelectBook
 from tkinter import *
 from tkinter import ttk
 import mysql.connector
 from tkinter import messagebox
 import datetime
+import tkinter
 
 
 
@@ -207,16 +209,16 @@ class LibraryManagementSystem:
     btnAddData = Button(FrameButton,command=self.show_data,text="Show Book Data",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=1,pady=5,padx=5)
 
-    btnAddData = Button(FrameButton,text="Update Books",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData = Button(FrameButton,text="Update Book",command=self.update,font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=2,pady=5,padx=5)
 
-    btnAddData = Button(FrameButton,text="Delete Book",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData = Button(FrameButton,text="Delete Book",command=self.delete,font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=3,pady=5,padx=5)
 
     btnAddData = Button(FrameButton,text="Reset",command=self.reset,font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=4,pady=5,padx=5)
 
-    btnAddData = Button(FrameButton,text="Exit",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData = Button(FrameButton,text="Exit",command=self.iExit,font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=5,pady=5,padx=5)
 
 
@@ -315,6 +317,47 @@ class LibraryManagementSystem:
 
     messagebox.showinfo("Success","Member has been inserted successfully")
 
+  
+
+  def update(self):
+     conn = mysql.connector.connect(
+        host="localhost",
+        username="root",
+        password="Husain515253@",
+        database="mydata"
+    )
+     my_cursor = conn.cursor()
+     my_cursor.execute("update library set Member=%s,ID=%s,FirstName=%s,LastName=%s,Address1=%s,Address2=%s,PostId=%s,Mobile=%s,BookId=%s,booktitle=%s,Author=%s,DateBorrowed=%s,DateDue=%s,daysofbook=%s,latereturnfine=%s,dateoverdue=%s,Finalprice=%s where PRN_NO=%s",
+           (
+            self.member_var.get(),
+            self.id_var.get(),
+            self.firstname_var.get(),
+            self.lastname_var.get(),
+            self.address1_var.get(),
+            self.address2_var.get(),
+            self.postcode_var.get(),
+            self.mobile_var.get(),
+            self.bookid_var.get(),
+            self.booktitle_var.get(),
+            self.author_var.get(),
+            self.dateborrowed_var.get(),
+            self.datedue_var.get(),
+            self.daysonbook_var.get(),
+            self.latereturnfine_var.get(),
+            self.dateoverdue_var.get(),
+            self.finalprice_var.get(),
+            self.prn_var.get()
+        )             
+      )
+     conn.commit()
+     self.fetch_data()
+     self.reset()
+     conn.close()
+
+     messagebox.showinfo("Library Management System","Member is Successfully Updated")
+     
+     
+
 
 
   def fetch_data(self):
@@ -406,6 +449,41 @@ class LibraryManagementSystem:
       self.dateoverdue_var.set(""),
       self.finalprice_var.set("")
       self.txtBox.delete("1.0",END)
+
+
+
+  def iExit(self):
+     iExit= tkinter.messagebox.askyesno("Library Management System","Are you sure you want to exit?")
+     if iExit>0:
+        self.root.destroy()
+        return
+
+
+  def delete(self):
+     if self.prn_var.get()=="" or self.id_var.get()=="":
+        messagebox.showerror("Error","Select the member to be deleted")
+      
+     else:
+        conn = mysql.connector.connect(
+          host="localhost",
+          username="root",
+          password="Husain515253@",
+          database="mydata"
+      )
+        my_cursor = conn.cursor()
+        query = "delete from library where PRN_NO=%s"
+        value = (self.prn_var.get(),)
+        my_cursor.execute(query,value)
+
+        conn.commit()
+        self.fetch_data()
+        self.reset()
+        conn.close()
+
+        messagebox.showinfo("Success","Member has been deleted")
+        
+
+
 
 
 
