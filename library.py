@@ -204,7 +204,7 @@ class LibraryManagementSystem:
     btnAddData = Button(FrameButton,command=self.add_data,text="Add Book",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=0,pady=5,padx=5)
 
-    btnAddData = Button(FrameButton,text="Show Books",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData = Button(FrameButton,command=self.show_data,text="Show Book Data",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=1,pady=5,padx=5)
 
     btnAddData = Button(FrameButton,text="Update Books",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
@@ -213,7 +213,7 @@ class LibraryManagementSystem:
     btnAddData = Button(FrameButton,text="Delete Book",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=3,pady=5,padx=5)
 
-    btnAddData = Button(FrameButton,text="Reset",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
+    btnAddData = Button(FrameButton,text="Reset",command=self.reset,font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
     btnAddData.grid(row=0,column=4,pady=5,padx=5)
 
     btnAddData = Button(FrameButton,text="Exit",font=("helvetica",12,"bold"),width=18,bg="black",fg="white")
@@ -269,6 +269,7 @@ class LibraryManagementSystem:
      self.library_table.column(col, width=100)
 
      self.fetch_data()
+     self.library_table.bind("<ButtonRelease-1>",self.get_cursor)
 
 
     self.library_table["show"]="headings"
@@ -337,6 +338,74 @@ class LibraryManagementSystem:
       conn.close()
 
 
+  
+  def get_cursor(self,event=""):
+      cursor_row = self.library_table.focus()
+      content = self.library_table.item(cursor_row)
+      row= content['values']
+
+      self.member_var.set(row[0]),
+      self.prn_var.set(row[1]),
+      self.id_var.set(row[2]),
+      self.firstname_var.set(row[3]),
+      self.lastname_var.set(row[4]),
+      self.address1_var.set(row[5]),
+      self.address2_var.set(row[6]),
+      self.postcode_var.set(row[7]),
+      self.mobile_var.set(row[8]),
+      self.bookid_var.set(row[9]),
+      self.booktitle_var.set(row[10]),
+      self.author_var.set(row[11]),
+      self.dateborrowed_var.set(row[12]),
+      self.datedue_var.set(row[13]),
+      self.daysonbook_var.set(row[14]),
+      self.latereturnfine_var.set(row[15]),
+      self.dateoverdue_var.set(row[16]),
+      self.finalprice_var.set(row[17])
+
+
+  def show_data(self):
+    self.txtBox.insert(END,"Member Type\t\t"+self.member_var.get() + "\n")           
+    self.txtBox.insert(END,"PRN No:\t\t"+ self.prn_var.get() + "\n") 
+    self.txtBox.insert(END,"ID No:\t\t"+ self.id_var.get() + "\n") 
+    self.txtBox.insert(END,"FirstName:\t\t"+ self.firstname_var.get() + "\n") 
+    self.txtBox.insert(END,"LastName:\t\t"+ self.lastname_var.get() + "\n") 
+    self.txtBox.insert(END, "Address1:\t\t"+ self.address1_var.get() + "\n") 
+    self.txtBox.insert(END,"Address2:\t\t"+ self.address2_var.get() + "\n") 
+    self.txtBox.insert(END, "Post Code:\t\t"+ self.postcode_var.get() + "\n") 
+    self.txtBox.insert(END,"Mobile No:\t\t"+ self.mobile_var.get() + "\n") 
+    self.txtBox.insert(END,"Book ID:\t\t"+ self.bookid_var.get() + "\n") 
+    self.txtBox.insert(END, "Book Title:\t\t"+ self.booktitle_var.get() + "\n") 
+    self.txtBox.insert(END,"Auther:\t\t"+ self.author_var.get() + "\n") 
+    self.txtBox.insert(END,"DateBorrowed:\t\t"+ self.dateborrowed_var.get() + "\n") 
+    self.txtBox.insert(END,"DateDue:\t\t"+ self.datedue_var.get() + "\n") 
+    self.txtBox.insert(END, "DaysOnBook:\t\t"+ self.daysonbook_var.get() + "\n") 
+    self.txtBox.insert(END,"LateRateFine:\t\t"+ self.latereturnfine_var.get() + "\n") 
+    self.txtBox.insert(END,"DateOverDue:\t\t"+ self.dateoverdue_var.get() + "\n") 
+    self.txtBox.insert(END,"FinallPrice:\t\t"+ self.finalprice_var.get() + "\n")
+
+
+
+  def reset(self):
+      self.member_var.set(""),
+      self.prn_var.set(""),
+      self.id_var.set(""),
+      self.firstname_var.set(""),
+      self.lastname_var.set(""),
+      self.address1_var.set(""),
+      self.address2_var.set(""),
+      self.postcode_var.set(""),
+      self.mobile_var.set(""),
+      self.bookid_var.set(""),
+      self.booktitle_var.set(""),
+      self.author_var.set(""),
+      self.dateborrowed_var.set(""),
+      self.datedue_var.set(""),
+      self.daysonbook_var.set(""),
+      self.latereturnfine_var.set(""),
+      self.dateoverdue_var.set(""),
+      self.finalprice_var.set("")
+      self.txtBox.delete("1.0",END)
 
 
 
